@@ -1,5 +1,5 @@
 # Reverse-Engineering a C Graphics Library
-
+# WIP!! Not finished  🚧 
 ## 🚀 Project Overview
 
 This project is a case study in C-based **reverse-engineering**. The starting point was a single, pre-compiled "black-box" graphics library (`librenderer.dylib`) provided without any headers, documentation or source code.

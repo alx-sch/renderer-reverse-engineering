@@ -5,7 +5,7 @@
   <br><span>The renderer successfully initialized — displaying its embedded "You did it! :D" animation.</span>
 </p>
 
-This project is a case study in C-based **reverse-engineering**, completed as a test task for a JetBrains internship<sup><a href="#footnote1">[1]</a></sup>. The starting point was a single, pre-compiled "black-box" graphics library (`librender`) provided without any headers, documentation, or source code. The goal: analyze the binary and write a host application that can successfully interface with it.
+This project is a case study in C-based **reverse-engineering**. The starting point was a single, pre-compiled "black-box" graphics library (`librender`) provided without any headers, documentation or source code. The goal: Analyze the binary and write a host application that can successfully interface with it.
 
 ---
 
@@ -20,7 +20,7 @@ This project is a case study in C-based **reverse-engineering**, completed as a 
 ### Build & Run
 
 ```bash
-git clone https://github.com/alx-sch/reverse.git
+git clone https://github.com/alx-sch/reverse.git reverse
 cd reverse
 make
 ./run_renderer
@@ -41,10 +41,10 @@ The Makefile auto-detects your OS and links the appropriate pre-compiled library
 
 Given only a compiled shared library with zero documentation, the objective was to:
 
-- **Discover the API** — identify every exported function symbol from the binary
-- **Deduce functionality** — determine what each function does, what arguments it expects, and what it returns
-- **Reconstruct the internal state** — the library operates on an opaque data structure the caller must allocate; reverse-engineer its exact memory layout (size, fields, offsets)
-- **Implement a working host** — write `main.c` to correctly allocate the state, initialize the renderer, drive the event loop, and handle cleanup
+- **Discover the API** — Identify every exported function symbol from the binary.
+- **Deduce functionality** — Determine what each function does, what arguments it expects and what it returns.
+- **Reconstruct the internal state** — The library operates on an opaque data structure the caller must allocate; reverse-engineer its exact memory layout (size, fields, offsets).
+- **Implement a working host** — Write `main.c` to correctly allocate the state, initialize the renderer, drive the event loop, and handle cleanup.
 
 The final measure of success: the renderer opens a window and displays its embedded animation.
 
@@ -78,7 +78,7 @@ Running `nm -g` on the `.dylib` to enumerate exported symbols:
 [...]
 ```
 
-The `gfx` prefix confirms a graphics library. The function names alone reveal a clear lifecycle pattern: *create → init → loop/render → close*. The `gfx_get_*` helpers suggest the library itself knows the desired window dimensions and title — the host doesn't invent them, it asks the library.
+The `gfx` prefix confirms a graphics library. The function names alone reveal a clear lifecycle pattern: *create → init → loop/render → close*. The `gfx_get_*` helpers suggest the library itself knows the desired window dimensions and title; the host doesn't invent them, it asks the library.
 
 ### Step 2 — Decompilation & Struct Reconstruction
 
@@ -181,15 +181,15 @@ while (1)
 }
 ```
 
-- **`gfx_loop(state, 0.0, 0L)`** — keeps the window alive and handles the "close window" event. Other events (keyboard/mouse) are captured into the struct but not used externally.
-- **`gfx_render(state, 1)`** — clears the frame buffer with a dark color and draws text into it. Passing `1` (or anything > 0) makes the text scroll; `0` would render it static.
-- **`gfx_sleep(0)`** — the FPS can be controlled by passing a value. Passing `0` lets the animation run as fast as possible without letting the `while(1)` loop hog the entire CPU. There's likely some internal throttling at play.
+- **`gfx_loop(state, 0.0, 0L)`** — Keeps the window alive and handles the "close window" event. Other events (keyboard/mouse) are captured into the struct but not used externally.
+- **`gfx_render(state, 1)`** — Clears the frame buffer with a dark color and draws text into it. Passing `1` (or anything > 0) makes the text scroll; `0` would render it static.
+- **`gfx_sleep(0)`** — The FPS can be controlled by passing a value. Passing `0` lets the animation run as fast as possible without letting the `while(1)` loop hog the entire CPU. There's likely some internal throttling at play.
 
 #### The Cleanup Problem
 
 The program doesn't exit by breaking the loop — it exits from *inside* `gfx_loop` as soon as it receives the "close window" event. This means any code after the `while(1)` loop is unreachable. So how to free the allocated memory?
 
-The solution: `atexit()`. It acts like a hook that runs a registered function on normal program exit. Because of its limitations (the registered function must be `void func(void)` — no arguments), the struct pointer is made global so the `cleanup()` function can access and free it during shutdown.
+The solution: `atexit()`. It acts like a hook that runs a registered function on normal program exit. Because of its limitations (the registered function must be `void func(void)`, no arguments), the struct pointer is made global so the `cleanup()` function can access and free it during shutdown.
 
 Running the `leaks` tool confirms: **no memory leaks**.
 
@@ -214,17 +214,16 @@ reverse/
 
 ## 🛠 Tools Used
 
-- **Ghidra** — decompilation and disassembly of the shared library
-- **nm** — exported symbol enumeration
-- **file** — architecture identification of library variants
-- **otool / objdump** — dynamic dependency and load-command inspection
-- **leaks** — memory leak verification on macOS
+- **Ghidra** — Decompilation and disassembly of the shared library.
+- **nm** — Exported symbol enumeration.
+- **file** — Architecture identification of library variants.
+- **otool / objdump** — Dynamic dependency and load-command inspection.
+- **leaks** — Memory leak verification on macOS.
 
 ---
 
 ## References
 
-<a name="footnote1">[1]</a> JetBrains. (2025). *Internship Project: Rendering iOS Simulator on IntelliJ IDEA and Android Studio*. Task #1 — Reverse-engineering challenge.<br>
-<a name="footnote2">[2]</a> National Security Agency. (2019). *Ghidra: A Software Reverse Engineering Framework*. <a href="https://ghidra-sre.org" target="_blank">https://ghidra-sre.org</a><br>
-<a name="footnote3">[3]</a> Apple Inc. *NSEvent.EventType*. <a href="https://developer.apple.com/documentation/appkit/nsevent/eventtype" target="_blank">https://developer.apple.com/documentation/appkit/nsevent/eventtype</a><br>
-<a name="footnote4">[4]</a> Apple Inc. *NSWindow.contentView*. <a href="https://developer.apple.com/documentation/appkit/nswindow/contentview" target="_blank">https://developer.apple.com/documentation/appkit/nswindow/contentview</a>
+<a name="footnote2">[1]</a> National Security Agency. (2019). *Ghidra: A Software Reverse Engineering Framework*. <a href="https://ghidra-sre.org" target="_blank">https://ghidra-sre.org</a><br>
+<a name="footnote3">[2]</a> Apple Inc. *NSEvent.EventType*. <a href="https://developer.apple.com/documentation/appkit/nsevent/eventtype" target="_blank">https://developer.apple.com/documentation/appkit/nsevent/eventtype</a><br>
+<a name="footnote4">[3]</a> Apple Inc. *NSWindow.contentView*. <a href="https://developer.apple.com/documentation/appkit/nswindow/contentview" target="_blank">https://developer.apple.com/documentation/appkit/nswindow/contentview</a>

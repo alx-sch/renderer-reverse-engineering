@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src=".assets/unlocked_animation.gif" width="500" />
-  <br><span>The renderer successfully initialized — displaying its embedded "You did it! :D" animation.</span>
+  <br><span>The renderer successfully initialized, displaying its embedded "You did it! :D" animation.</span>
 </p>
 
 This project is a case study in C-based **reverse-engineering**, completed as a test task for a JetBrains internship<sup><a href="#footnote1">[1]</a></sup>. The starting point was a single, pre-compiled "black-box" graphics library (`librender`) provided without any headers, documentation, or source code. The goal: analyze the binary and write a host application that can successfully interface with it.

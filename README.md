@@ -224,6 +224,6 @@ reverse/
 
 ## References
 
-<a name="footnote2">[1]</a> National Security Agency. (2019). *Ghidra: A Software Reverse Engineering Framework*. <a href="https://ghidra-sre.org" target="_blank">https://ghidra-sre.org</a><br>
-<a name="footnote3">[2]</a> Apple Inc. *NSEvent.EventType*. <a href="https://developer.apple.com/documentation/appkit/nsevent/eventtype" target="_blank">https://developer.apple.com/documentation/appkit/nsevent/eventtype</a><br>
-<a name="footnote4">[3]</a> Apple Inc. *NSWindow.contentView*. <a href="https://developer.apple.com/documentation/appkit/nswindow/contentview" target="_blank">https://developer.apple.com/documentation/appkit/nswindow/contentview</a>
+<a name="footnote2">[1]</a> National Security Agency (2019). *Ghidra: A Software Reverse Engineering Framework*. <a href="https://ghidra-sre.org" target="_blank">https://ghidra-sre.org</a><br>
+<a name="footnote3">[2]</a> Apple Inc. (2026). *NSEvent.EventType*. <a href="https://developer.apple.com/documentation/appkit/nsevent/eventtype" target="_blank">https://developer.apple.com/documentation/appkit/nsevent/eventtype</a><br>
+<a name="footnote4">[3]</a> Apple Inc. (2026). *NSWindow.contentView*. <a href="https://developer.apple.com/documentation/appkit/nswindow/contentview" target="_blank">https://developer.apple.com/documentation/appkit/nswindow/contentview</a>

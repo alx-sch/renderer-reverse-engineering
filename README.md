@@ -1,7 +1,7 @@
 # Reverse-Engineering a C Graphics Library
 
 <p align="center">
-  <img src=".assets/unlocked_animation.gif" width="500" />
+  <img src=".assets/unlocked_animation.gif" width="300" />
   <br><span>The renderer successfully initialized, displaying its embedded "You did it! :D" animation.</span>
 </p>
 

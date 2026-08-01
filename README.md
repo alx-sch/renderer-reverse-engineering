@@ -5,7 +5,7 @@
   <br><span>The renderer successfully initialized, displaying its embedded "You did it! :D" animation.</span>
 </p>
 
-This project is a case study in C-based **reverse-engineering**. The starting point was a single, pre-compiled "black-box" graphics library (`librender`) provided without any headers, documentation or source code. The goal: Analyze the binary and write a host application that can successfully interface with it.
+This project is a case study in C-based **reverse-engineering**, originally completed as a technical challenge during a hiring process. The starting point was a single, pre-compiled "black-box" graphics library (`librender`) provided without any headers, documentation or source code. The goal: Analyze the binary and write a host application that can successfully interface with it.
 
 ---
 
